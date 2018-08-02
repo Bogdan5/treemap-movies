@@ -21,13 +21,24 @@ const drawTreeMap = (data) => {
     .attr('width', 600)
     .attr('height', 600);
 
-  let treemap = d3.layout.treemap()
-    .size([600, 600])
-    .nodes(data);
+  let treemap = d3.tree()
+    .size([600, 600]);
+
+  //  assigns the data to a hierarchy using parent-child relationships
+  let nodes = d3.hierarchy(data, (d) => d.children);
+
+  // maps the node data to the tree layout
+  nodes = treemap(nodes);
 
   let cells = svg.selectAll('.cell')
     .data(treemap)
     .enter()
     .append('g')
     .attr('class', 'cell');
+
+  cells.append('rect')
+    .attr('x', (d) => d.x)
+    .attr('y', (d) => d.y)
+    .attr('dx', (d) => d.dx)
+    .attr((d) => d.dy);
 };
