@@ -11,4 +11,23 @@ req.onload = () => {
 
 const drawTreeMap = (data) => {
   console.log(data);
+
+  let container = d3.select('body')
+    .append('div')
+    .attr('width', 600)
+    .attr('height', 600);
+
+  let svg = container.append('svg')
+    .attr('width', 600)
+    .attr('height', 600);
+
+  let treemap = d3.layout.treemap()
+    .size([600, 600])
+    .nodes(data);
+
+  let cells = svg.selectAll('.cell')
+    .data(treemap)
+    .enter()
+    .append('g')
+    .attr('class', 'cell');
 };
