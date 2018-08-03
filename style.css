@@ -2,3 +2,7 @@ rect {
   opacity: 0.3;
   stroke: white;
 }
+
+.titles{
+  font-size: 10px;
+}
