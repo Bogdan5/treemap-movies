@@ -21,26 +21,38 @@ const drawTreeMap = (data) => {
     .attr('width', 600)
     .attr('height', 600);
 
+  svg.append('g');
+
   let root = d3.hierarchy(data);
+
+  const color = d3.scaleOrdinal().range(d3.schemeCategory20c);
 
   //treemap layout defined and configured
   let  treemapLayout = d3.treemap();
-  treemapLayout.size([400, 400])
-    .paddingOuter(50);
+  treemapLayout.size([400, 400]);
 
   root.sum(function (d) {
-    return 10;
+    return parseInt(d.value);
   });
 
   treemapLayout(root);
+  let childrenMovies = () => {
+    let res = root.descendants();
+    return res.filter((item) => !item.children);
+  };
 
-  d3.select('svg')
+  console.log('descendents', childrenMovies());
+
+  d3.select('svg g')
     .selectAll('rect')
-    .data(root.descendants())
+    .data(childrenMovies())
     .enter()
     .append('rect')
-    .attr('x', function (d) { return d.x0; })
+    .attr('x', function (d) {
+      // console.log(d);
+      return d.x0; })
     .attr('y', function (d) { return d.y0; })
     .attr('width', function (d) { return d.x1 - d.x0; })
-    .attr('height', function (d) { return d.y1 - d.y0; });
+    .attr('height', function (d) { return d.y1 - d.y0; })
+    .style('fill', (d) => color(d.data.category));
 };
