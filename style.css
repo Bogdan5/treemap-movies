@@ -1,13 +1,11 @@
-rect {
-  opacity: 0.3;
-  stroke: white;
+body{
+  font-family: 'Playfair Display', serif;
 }
 
 .nodes{
   border: 1px solid white;
   font-size: 10px;
   padding: 3px;
-  font-family: 'Playfair Display', serif;
 }
 
 .tooltip{
@@ -16,4 +14,5 @@ rect {
   padding: 4px;
   box-shadow: 3px 3px 5px;
   z-index: 5;
+  font-size: 10px;
 }
