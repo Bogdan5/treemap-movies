@@ -38,6 +38,11 @@ const drawTreeMap = (data) => {
     return res.filter((item) => !item.children);
   };
 
+  let tooltip = container.append('div')
+    .style('position', 'absolute')
+    .attr('class', 'tooltip')
+    .style('visibility', 'hidden');
+
   container.selectAll('.nodes')
     .data(childrenMovies())
     .enter()
@@ -49,8 +54,14 @@ const drawTreeMap = (data) => {
     .style('width', (d) => Math.abs(d.x1 - d.x0) + 'px')
     .style('height', (d) => Math.abs(d.y1 - d.y0) + 'px')
     .style('background-color',  (d) => color(d.data.category))
-    .text((d) => d.data.name);
-
+    .text((d) => d.data.name)
+    .on('mouseover', (event) => {
+        tooltip.text((d) => `Title: ${d.data.name}
+      Gross: ${d.value})`)
+        .style('left', (d) => `${event.pageX}`)
+        .style('top', (d) => `${event.pagey}`);
+      })
+    .on('mouseleave', tooltip.style('visibility', 'none'));
 
   console.log('descendents', childrenMovies());
 
