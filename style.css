@@ -15,4 +15,5 @@ rect {
   border-radius: 3px;
   padding: 4px;
   box-shadow: 3px 3px 5px;
+  z-index: 5;
 }
