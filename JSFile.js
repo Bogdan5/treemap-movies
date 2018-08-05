@@ -15,13 +15,10 @@ const drawTreeMap = (data) => {
   let container = d3.select('body')
     .append('div')
     .attr('width', 1000)
-    .attr('height', 600);
-
-  let svg = container.append('svg')
-    .attr('width', 1000)
-    .attr('height', 600);
-
-  svg.append('g');
+    .attr('height', 600)
+    .style('position', 'relative')
+    .style('left', 20)
+    .style('top', 30);
 
   let root = d3.hierarchy(data);
 
@@ -41,37 +38,20 @@ const drawTreeMap = (data) => {
     return res.filter((item) => !item.children);
   };
 
-  console.log('descendents', childrenMovies());
-
-  let nodes = d3.select('svg g')
-    .selectAll('g')
+  container.selectAll('.nodes')
     .data(childrenMovies())
     .enter()
-    .append('g')
-    .attr('transform', (d) => `translate(${[d.x0, d.y0]})`);
-
-  nodes.append('rect')
-    .attr('width', (d) => d.x1 - d.x0)
-    .attr('height', (d) => d.y1 - d.y0)
-    .style('fill', (d) => color(d.data.category));
-
-  nodes.append('text')
-    .attr('class', 'titles')
-    .attr('dx', 5)
-    .attr('dy', 5)
+    .append('div')
+    .style('position', 'absolute')
+    .attr('class', 'nodes')
+    .style('left', (d) => d.x0 + 'px')
+    .style('top', (d) => d.y0 + 'px')
+    .style('width', (d) => Math.abs(d.x1 - d.x0) + 'px')
+    .style('height', (d) => Math.abs(d.y1 - d.y0) + 'px')
+    .style('background-color',  (d) => color(d.data.category))
     .text((d) => d.data.name);
 
-  // d3.select('svg g')
-  //   .selectAll('rect')
-  //   .data(childrenMovies())
-  //   .enter()
-  //   .append('rect')
-  //   .attr('x', function (d) {
-  //     // console.log(d);
-  //     return d.x0; })
-  //   .attr('y', function (d) { return d.y0; })
-  //   .attr('width', function (d) { return d.x1 - d.x0; })
-  //   .attr('height', function (d) { return d.y1 - d.y0; })
-  //   .style('fill', (d) => color(d.data.category))
-  //   .text((d) => d.data.name);
+
+  console.log('descendents', childrenMovies());
+
 };

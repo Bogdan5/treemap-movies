@@ -3,6 +3,9 @@ rect {
   stroke: white;
 }
 
-.titles{
+.nodes{
+  border: 1px solid white;
   font-size: 10px;
+  padding: 3px;
+  font-family: 'Playfair Display', serif;
 }
